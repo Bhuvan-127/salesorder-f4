@@ -1,0 +1,78 @@
+_schema-version: "3.2"
+ID: sales-order-ui
+version: 0.0.1
+
+modules:
+  # -------------------- APPROUTER MODULE --------------------
+  - name: so-approuter
+    type: approuter.nodejs
+    path: approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: sales-order-ui-destination-service
+      - name: sales-order-ui-connectivity
+      - name: sales-order-ui-xsuaa
+      - name: sales-order-ui-html5-repo-runtime
+
+  # -------------------- UI5 HTML5 MODULE (build-only, NOT deployed as CF app) --------------------
+  - name: salesorder
+    type: html5
+    path: .
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      build-result: dist
+      supported-platforms: []
+
+  # -------------------- HTML5 DEPLOYER MODULE --------------------
+  - name: sales-order-ui-ui-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: sales-order-ui-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - name: salesorder
+          artifacts:
+            - '**/*'
+          target-path: resources/
+
+resources:
+  # -------------------- EXISTING SERVICES --------------------
+  - name: sales-order-ui-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+
+  - name: sales-order-ui-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+
+  - name: sales-order-ui-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+
+  # -------------------- HTML5 REPO HOST --------------------
+  - name: sales-order-ui-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  # -------------------- HTML5 REPO RUNTIME --------------------
+  - name: sales-order-ui-html5-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="SalesOrderService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotation Term="Core.Links">
+                <Collection>
+                    <Record>
+                        <PropertyValue Property="rel" String="author"/>
+                        <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="SalesOrders" EntityType="SalesOrderService.SalesOrders">
+                    <NavigationPropertyBinding Path="generalInfo" Target="GeneralInfo"/>
+                    <NavigationPropertyBinding Path="items" Target="SalesOrderItems"/>
+                    <NavigationPropertyBinding Path="partners" Target="PartnerFunctions"/>
+                    <NavigationPropertyBinding Path="pricingConditions" Target="PricingConditions"/>
+                    <NavigationPropertyBinding Path="scheduleLines" Target="ScheduleLines"/>
+                    <NavigationPropertyBinding Path="shippingRoute" Target="ShippingRoute"/>
+                    <NavigationPropertyBinding Path="billingFinancial" Target="BillingFinancial"/>
+                </EntitySet>
+                <EntitySet Name="GeneralInfo" EntityType="SalesOrderService.GeneralInfo"/>
+                <EntitySet Name="SalesOrderItems" EntityType="SalesOrderService.SalesOrderItems">
+                    <NavigationPropertyBinding Path="parent" Target="SalesOrders"/>
+                </EntitySet>
+                <EntitySet Name="PartnerFunctions" EntityType="SalesOrderService.PartnerFunctions">
+                    <NavigationPropertyBinding Path="parent" Target="SalesOrders"/>
+                </EntitySet>
+                <EntitySet Name="PricingConditions" EntityType="SalesOrderService.PricingConditions">
+                    <NavigationPropertyBinding Path="parent" Target="SalesOrders"/>
+                </EntitySet>
+                <EntitySet Name="ScheduleLines" EntityType="SalesOrderService.ScheduleLines">
+                    <NavigationPropertyBinding Path="parent" Target="SalesOrders"/>
+                </EntitySet>
+                <EntitySet Name="ShippingRoute" EntityType="SalesOrderService.ShippingRoute"/>
+                <EntitySet Name="BillingFinancial" EntityType="SalesOrderService.BillingFinancial"/>
+                <ActionImport Name="createOrder" Action="SalesOrderService.createOrder" EntitySet="SalesOrders"/>
+            </EntityContainer>
+            <EntityType Name="SalesOrders">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="salesOrder" Type="Edm.String" MaxLength="10"/>
+                <Property Name="status" Type="Edm.String" MaxLength="20"/>
+                <Property Name="netValue" Type="Edm.Decimal" Precision="15" Scale="2"/>
+                <Property Name="lockedBy" Type="Edm.String" MaxLength="12"/>
+                <NavigationProperty Name="generalInfo" Type="SalesOrderService.GeneralInfo">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="generalInfo_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="generalInfo_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="items" Type="Collection(SalesOrderService.SalesOrderItems)" Partner="parent">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="partners" Type="Collection(SalesOrderService.PartnerFunctions)" Partner="parent">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="pricingConditions" Type="Collection(SalesOrderService.PricingConditions)" Partner="parent">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="scheduleLines" Type="Collection(SalesOrderService.ScheduleLines)" Partner="parent">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="shippingRoute" Type="SalesOrderService.ShippingRoute">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="shippingRoute_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="shippingRoute_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="billingFinancial" Type="SalesOrderService.BillingFinancial">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="billingFinancial_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="billingFinancial_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="GeneralInfo">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="orderType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="salesOrg" Type="Edm.String" MaxLength="4"/>
+                <Property Name="soldToParty" Type="Edm.String" MaxLength="10"/>
+                <Property Name="shipToParty" Type="Edm.String" MaxLength="10"/>
+                <Property Name="reqDeliveryDate" Type="Edm.Date"/>
+                <Property Name="poNumber" Type="Edm.String" MaxLength="35"/>
+                <Property Name="distChannel" Type="Edm.String" MaxLength="2"/>
+                <Property Name="division" Type="Edm.String" MaxLength="2"/>
+                <Property Name="salesOffice" Type="Edm.String" MaxLength="4"/>
+                <Property Name="salesGroup" Type="Edm.String" MaxLength="3"/>
+                <Property Name="docDate" Type="Edm.Date"/>
+                <Property Name="poDate" Type="Edm.Date"/>
+            </EntityType>
+            <EntityType Name="SalesOrderItems">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="parent" Type="SalesOrderService.SalesOrders" Partner="items">
+                    <ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="parent_ID" Type="Edm.Guid"/>
+                <Property Name="itemNum" Type="Edm.String" MaxLength="6"/>
+                <Property Name="material" Type="Edm.String" MaxLength="18"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+                <Property Name="uom" Type="Edm.String" MaxLength="3"/>
+                <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+                <Property Name="storageLocation" Type="Edm.String" MaxLength="4"/>
+                <Property Name="itemCategory" Type="Edm.String" MaxLength="4"/>
+                <Property Name="netValue" Type="Edm.Decimal" Precision="15" Scale="2"/>
+            </EntityType>
+            <EntityType Name="PartnerFunctions">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="parent" Type="SalesOrderService.SalesOrders" Partner="partners">
+                    <ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="parent_ID" Type="Edm.Guid"/>
+                <Property Name="role" Type="Edm.String" MaxLength="2"/>
+                <Property Name="description" Type="Edm.String" MaxLength="30"/>
+                <Property Name="partnerId" Type="Edm.String" MaxLength="10"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+                <Property Name="address" Type="Edm.String" MaxLength="80"/>
+            </EntityType>
+            <EntityType Name="PricingConditions">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="parent" Type="SalesOrderService.SalesOrders" Partner="pricingConditions">
+                    <ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="parent_ID" Type="Edm.Guid"/>
+                <Property Name="step" Type="Edm.String" MaxLength="4"/>
+                <Property Name="conditionType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="rate" Type="Edm.String" MaxLength="15"/>
+                <Property Name="baseValue" Type="Edm.String" MaxLength="20"/>
+                <Property Name="calculatedValue" Type="Edm.Decimal" Precision="15" Scale="2"/>
+                <Property Name="isStatistical" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="ScheduleLines">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="parent" Type="SalesOrderService.SalesOrders" Partner="scheduleLines">
+                    <ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="parent_ID" Type="Edm.Guid"/>
+                <Property Name="itemNum" Type="Edm.String" MaxLength="6"/>
+                <Property Name="line" Type="Edm.String" MaxLength="4"/>
+                <Property Name="deliveryDate" Type="Edm.Date"/>
+                <Property Name="category" Type="Edm.String" MaxLength="2"/>
+                <Property Name="orderQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+                <Property Name="confirmedQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+                <Property Name="movementType" Type="Edm.String" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="ShippingRoute">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="shippingConditions" Type="Edm.String" MaxLength="2"/>
+                <Property Name="loadingGroup" Type="Edm.String" MaxLength="4"/>
+                <Property Name="shippingPoint" Type="Edm.String" MaxLength="15"/>
+                <Property Name="route" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="BillingFinancial">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="paymentTerms" Type="Edm.String" MaxLength="4"/>
+                <Property Name="billingBlock" Type="Edm.String" MaxLength="2"/>
+                <Property Name="docCurrency" Type="Edm.String" MaxLength="5"/>
+                <Property Name="deliveryBlock" Type="Edm.String" MaxLength="2"/>
+                <Property Name="taxClass" Type="Edm.String" MaxLength="1"/>
+            </EntityType>
+            <ComplexType Name="salesorder_db_CreateOrderInput">
+                <Property Name="orderType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="salesOrg" Type="Edm.String" MaxLength="4"/>
+                <Property Name="distChannel" Type="Edm.String" MaxLength="2"/>
+                <Property Name="division" Type="Edm.String" MaxLength="2"/>
+                <Property Name="soldToParty" Type="Edm.String" MaxLength="10"/>
+            </ComplexType>
+            <Action Name="createOrder" IsBound="false">
+                <Parameter Name="input" Type="SalesOrderService.salesorder_db_CreateOrderInput"/>
+                <ReturnType Type="SalesOrderService.SalesOrders"/>
+            </Action>
+            <Annotations Target="SalesOrderService.SalesOrders/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/createdBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/modifiedAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/modifiedBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/salesOrder">
+                <Annotation Term="Common.Label" String="Sales Order"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/status">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/netValue">
+                <Annotation Term="Common.Label" String="Net Value"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/lockedBy">
+                <Annotation Term="Common.Label" String="Locked By"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/orderType">
+                <Annotation Term="Common.Label" String="Sales Document Type (AUART)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/salesOrg">
+                <Annotation Term="Common.Label" String="Sales Organization"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/soldToParty">
+                <Annotation Term="Common.Label" String="Sold-To Party (KUNNR)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/shipToParty">
+                <Annotation Term="Common.Label" String="Ship-To Party (WE)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/reqDeliveryDate">
+                <Annotation Term="Common.Label" String="Requested Delivery Date (VDATU)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/poNumber">
+                <Annotation Term="Common.Label" String="Customer Purchase Ref (BSTNK)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/distChannel">
+                <Annotation Term="Common.Label" String="Distribution Channel (VTWEG)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/division">
+                <Annotation Term="Common.Label" String="Division (SPART)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/salesOffice">
+                <Annotation Term="Common.Label" String="Sales Office"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/salesGroup">
+                <Annotation Term="Common.Label" String="Sales Group"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/docDate">
+                <Annotation Term="Common.Label" String="Document Date"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.GeneralInfo/poDate">
+                <Annotation Term="Common.Label" String="PO Date"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/itemNum">
+                <Annotation Term="Common.Label" String="Item"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/material">
+                <Annotation Term="Common.Label" String="Material"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/description">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/quantity">
+                <Annotation Term="Common.Label" String="Qty"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/uom">
+                <Annotation Term="Common.Label" String="UoM"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/plant">
+                <Annotation Term="Common.Label" String="Delivering Plant"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/storageLocation">
+                <Annotation Term="Common.Label" String="Storage Location"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/itemCategory">
+                <Annotation Term="Common.Label" String="Category"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderItems/netValue">
+                <Annotation Term="Common.Label" String="Net Value"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PartnerFunctions/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PartnerFunctions/role">
+                <Annotation Term="Common.Label" String="Role"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PartnerFunctions/description">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PartnerFunctions/partnerId">
+                <Annotation Term="Common.Label" String="Partner ID"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PartnerFunctions/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PartnerFunctions/address">
+                <Annotation Term="Common.Label" String="Address"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/step">
+                <Annotation Term="Common.Label" String="Step"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/conditionType">
+                <Annotation Term="Common.Label" String="Cond. Type"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/description">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/rate">
+                <Annotation Term="Common.Label" String="Rate"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/baseValue">
+                <Annotation Term="Common.Label" String="Base Value"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/calculatedValue">
+                <Annotation Term="Common.Label" String="Calculated Value"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.PricingConditions/isStatistical">
+                <Annotation Term="Common.Label" String="Statistical"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/itemNum">
+                <Annotation Term="Common.Label" String="Item"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/line">
+                <Annotation Term="Common.Label" String="Line"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/deliveryDate">
+                <Annotation Term="Common.Label" String="Delivery Date"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/category">
+                <Annotation Term="Common.Label" String="Category"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/orderQuantity">
+                <Annotation Term="Common.Label" String="Order Qty"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/confirmedQuantity">
+                <Annotation Term="Common.Label" String="Confirmed Qty"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ScheduleLines/movementType">
+                <Annotation Term="Common.Label" String="Mov. Type"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ShippingRoute/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ShippingRoute/shippingConditions">
+                <Annotation Term="Common.Label" String="Shipping Conditions (VSBED)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ShippingRoute/loadingGroup">
+                <Annotation Term="Common.Label" String="Loading Group Default"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ShippingRoute/shippingPoint">
+                <Annotation Term="Common.Label" String="Shipping Point Determined (VSTEL)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.ShippingRoute/route">
+                <Annotation Term="Common.Label" String="Logistics Route Assignment"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.BillingFinancial/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.BillingFinancial/paymentTerms">
+                <Annotation Term="Common.Label" String="Payment Terms (ZTERM)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.BillingFinancial/billingBlock">
+                <Annotation Term="Common.Label" String="Header Billing Block (FAKSK)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.BillingFinancial/docCurrency">
+                <Annotation Term="Common.Label" String="Document Currency (WAERK)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.BillingFinancial/deliveryBlock">
+                <Annotation Term="Common.Label" String="Header Delivery Block (LIFSK)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.BillingFinancial/taxClass">
+                <Annotation Term="Common.Label" String="Material Tax Classification (TAXM1)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.salesorder_db_CreateOrderInput/orderType">
+                <Annotation Term="Common.Label" String="Sales Order Type"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.salesorder_db_CreateOrderInput/salesOrg">
+                <Annotation Term="Common.Label" String="Sales Organization"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.salesorder_db_CreateOrderInput/distChannel">
+                <Annotation Term="Common.Label" String="Distribution Channel"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.salesorder_db_CreateOrderInput/division">
+                <Annotation Term="Common.Label" String="Division"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.salesorder_db_CreateOrderInput/soldToParty">
+                <Annotation Term="Common.Label" String="Sold-To Customer Party (KUNNR)"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

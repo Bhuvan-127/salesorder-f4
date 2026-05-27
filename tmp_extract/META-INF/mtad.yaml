@@ -1,0 +1,30 @@
+_schema-version: "3.2"
+ID: sales-order-ui
+version: 0.0.1
+modules:
+- name: so-approuter
+  type: javascript.nodejs
+  path: so-approuter
+  requires:
+  - name: sales-order-ui-destination-service
+  - name: sales-order-ui-connectivity
+  - name: sales-order-ui-xsuaa
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+resources:
+- name: sales-order-ui-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+- name: sales-order-ui-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+- name: sales-order-ui-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application

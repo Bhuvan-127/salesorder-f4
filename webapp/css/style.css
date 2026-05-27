@@ -1,0 +1,455 @@
+/* ====================================================================
+   SAP Fiori Horizon Premium Custom Styling System for Sales Order App
+   ==================================================================== */
+
+/* Global Premium Fonts & Enhancements */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.sapMPage, .sapMPageContent, .sapUiBody {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Master Pane Selection Enhancements */
+.sapMListShowSeparators .sapMLIB {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.2s ease-in-out;
+}
+.sapMLIBHoverable:hover {
+    background-color: rgba(0, 112, 242, 0.04) !important;
+}
+.sapMLIBSelected, .sapMLIBSelected:hover {
+    background-color: rgba(0, 112, 242, 0.08) !important;
+    border-left: 4px solid #0070f2 !important;
+}
+
+/* ====================================================================
+   DETAIL PAGE SECTION 1: HEADER & KPI CARDS
+   ==================================================================== */
+
+/* Title & Meta Header Card */
+.detailHeaderTitle {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    letter-spacing: -0.025em !important;
+}
+
+.detailHeaderStatusBadge .sapMObjStatusText {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 3px 8px !important;
+    border-radius: 12px !important;
+    display: inline-block !important;
+}
+
+.detailHeaderStatusBadge.sapMObjStatusSuccess .sapMObjStatusText {
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
+}
+
+.detailHeaderStatusBadge.sapMObjStatusWarning .sapMObjStatusText {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+}
+
+.detailHeaderLabel {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    letter-spacing: 0.05em !important;
+}
+
+.detailHeaderCustomerVal {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+}
+
+/* KPI Cards Layout & Glassmorphism */
+.detailKpiHBox {
+    display: flex !important;
+    gap: 12px !important;
+}
+
+.kpiCardBox {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease-in-out !important;
+}
+
+.kpiCardBox:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 112, 242, 0.3) !important;
+}
+
+.kpiCardIconBlue {
+    color: #0070f2 !important;
+    font-size: 1.1rem !important;
+}
+
+.kpiCardTitleBlue {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: #0070f2 !important;
+    letter-spacing: 0.05em !important;
+}
+
+.kpiCardValue {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin: 4px 0 6px 0 !important;
+}
+
+.kpiCardProgress {
+    height: 6px !important;
+    border-radius: 3px !important;
+}
+
+.kpiCardIconGreen {
+    color: #10b981 !important;
+    font-size: 1.1rem !important;
+}
+
+.kpiCardTitleGreen {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: #10b981 !important;
+    letter-spacing: 0.05em !important;
+}
+
+.kpiCardValueNum .sapMObjectNumberText {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+}
+
+.kpiCardSubtext {
+    font-size: 0.65rem !important;
+    color: #94a3b8 !important;
+    margin-top: 4px !important;
+}
+
+/* ====================================================================
+   DETAIL PAGE SECTION 2: ATTRIBUTE BAR
+   ==================================================================== */
+
+.detailParametersHBox {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 12px 18px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+}
+
+.row2Label {
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 2px !important;
+}
+
+.row2Value {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+}
+
+.row2ValueIcon {
+    color: #64748b !important;
+    font-size: 0.95rem !important;
+}
+
+.row2ValueBlue {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #0070f2 !important;
+}
+
+.row2ValueGreen .sapMObjectNumberText {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #10b981 !important;
+}
+
+/* ====================================================================
+   DETAIL PAGE SECTION 3: TABS & FORMS
+   ==================================================================== */
+
+.sapMITBContent {
+    border-top: none !important;
+    padding-top: 16px !important;
+}
+
+.customFacetForm {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.01) !important;
+}
+
+.formFacetLabel {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    letter-spacing: 0.025em !important;
+}
+
+.formFacetInput .sapMInputBaseInner {
+    border-radius: 4px !important;
+    border: 1px solid #cbd5e1 !important;
+    font-size: 0.85rem !important;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+}
+
+.formFacetInput .sapMInputBaseInner:focus {
+    border-color: #0070f2 !important;
+    box-shadow: 0 0 0 2px rgba(0, 112, 242, 0.15) !important;
+}
+
+/* ====================================================================
+   DETAIL PAGE SECTION 4: LINE ITEMS TABLE
+   ==================================================================== */
+
+.customItemsTableTitle {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+}
+
+.tableColHeader {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.025em !important;
+}
+
+.tableCellText {
+    font-size: 0.85rem !important;
+    color: #334155 !important;
+}
+
+.tableCellInput .sapMInputBaseInner, .tableCellInputQty .sapMInputBaseInner {
+    border-radius: 4px !important;
+    border: 1px solid #cbd5e1 !important;
+    height: 1.85rem !important;
+    font-size: 0.85rem !important;
+}
+
+.tableCellInputQty .sapMInputBaseInner {
+    text-align: right !important;
+    font-weight: 600 !important;
+}
+
+.tableCellNetVal .sapMObjectNumberText {
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #0f766e !important;
+}
+
+/* ====================================================================
+   DETAIL PAGE SECTION 5: INTERACTIVE DOCUMENT FLOW
+   ==================================================================== */
+
+.customDocFlowBox {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.01) !important;
+}
+
+.docFlowHeaderBar {
+    border-bottom: 1px dashed #e2e8f0 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+}
+
+.docFlowHeaderTitle {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+}
+
+.docFlowNodesContainer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+}
+
+.docFlowNodeBox {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-width: 170px !important;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.docFlowNodeBox:hover {
+    background: #ffffff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    border-color: #0070f2 !important;
+}
+
+.docFlowNodeLabel {
+    font-size: 0.58rem !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+}
+
+.docFlowNodeVal {
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    margin-top: 1px !important;
+}
+
+.docFlowNodeValBlue {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #0070f2 !important;
+    margin-top: 1px !important;
+}
+
+.docFlowNodeValGreen {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #10b981 !important;
+    margin-top: 1px !important;
+}
+
+.docFlowNodeStatusIconSuccess {
+    color: #10b981 !important;
+    font-size: 0.95rem !important;
+    margin-left: 8px !important;
+}
+
+.docFlowSeparatorIcon {
+    color: #94a3b8 !important;
+    font-size: 1.1rem !important;
+    margin: 0 4px !important;
+}
+
+/* ====================================================================
+   BUTTONS, DIALOGS, & DIALOG FIELDS
+   ==================================================================== */
+
+/* Footers Buttons Custom Styling */
+.customDeleteBtn .sapMBtnInner {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+    border-color: #dc2626 !important;
+}
+
+.customDeleteBtn:hover .sapMBtnInner {
+    background-color: #dc2626 !important;
+}
+
+.customConditionsBtn .sapMBtnInner {
+    height: 1.6rem !important;
+    line-height: 1.5rem !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    padding: 0 8px !important;
+    border-radius: 4px !important;
+}
+
+.customTraceKeysBtn .sapMBtnInner, .customCancelBtn .sapMBtnInner {
+    border-radius: 4px !important;
+    font-size: 0.8rem !important;
+}
+
+.customContinueBtn .sapMBtnInner {
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+}
+
+/* Dialog Styling */
+.customCreateDialog {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15) !important;
+}
+
+.customDialogHeader {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    height: 4.5rem !important;
+}
+
+/* Ensure inner bar containers scale and align properly without clipping */
+.customDialogHeader,
+.customDialogHeader .sapMBarContainer,
+.customDialogHeader .sapMBarLeft,
+.customDialogHeader .sapMBarPH,
+.customDialogHeader .sapMBarRight {
+    height: 4.5rem !important;
+    line-height: 1.2 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.customHeaderTitle {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+}
+
+.customHeaderSubtitle {
+    color: #94a3b8 !important;
+    font-size: 0.72rem !important;
+    margin-top: 2px !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.025em !important;
+}
+
+.customHeaderCloseBtn {
+    color: #94a3b8 !important;
+}
+
+.formFieldBox {
+    margin-bottom: 12px !important;
+}
+
+.formFieldLabel {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 4px !important;
+}
+
+.formFieldInput .sapMInputBaseInner {
+    border-radius: 6px !important;
+    height: 2.2rem !important;
+    font-size: 0.88rem !important;
+}
+
+.formFieldDesc {
+    font-size: 0.7rem !important;
+    color: #64748b !important;
+    font-style: italic !important;
+    margin-top: 3px !important;
+}

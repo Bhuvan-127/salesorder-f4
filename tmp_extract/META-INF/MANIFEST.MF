@@ -1,0 +1,11 @@
+manifest-Version: 1.0
+Created-By: SAP Application Archive Builder 1.2.47
+
+Name: so-approuter/data.zip
+MTA-Module: so-approuter
+Content-Type: application/zip
+
+
+Name: META-INF/mtad.yaml
+Content-Type: text/plain
+
